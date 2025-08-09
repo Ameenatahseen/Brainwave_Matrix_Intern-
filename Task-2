@@ -1,1 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlogSphere - Your Creative Space</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f9fa;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .blog-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .blog-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .auth-form {
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .editor-toolbar {
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .comment-box {
+            border-left: 3px solid #3b82f6;
+            transition: background-color 0.2s ease;
+        }
+        
+        .comment-box:hover {
+            background-color: #f8fafc;
+        }
+        
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+            
+            .sidebar.active {
+                transform: translateX(0);
+            }
+        }
+        
+        .placeholder-text::placeholder {
+            color: #94a3b8;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex">
+                    <div class="flex-shrink-0 flex items-center">
+                        <span class="text-xl font-bold gradient-text">BlogSphere</span>
+                    </div>
+                    <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
+                        <a href="#" class="border-blue-500 text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">Home</a>
+                        <a href="#" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">Explore</a>
+                        <a href="#" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">Categories</a>
+                    </div>
+                </div>
+                <div class="hidden sm:ml-6 sm:flex sm:items-center">
+                    <button class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors duration-300">
+                        Write a Post
+                    </button>
+                    <div class="ml-3 relative">
+                        <div>
+                            <button type="button" class="bg-gray-100 rounded-full flex text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
+                                <span class="sr-only">Open user menu</span>
+                                <img class="h-8 w-8 rounded-full" src="https://placehold.co/100x100" alt="User profile picture showing a smiling person with dark hair against a blue background">
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="-mr-2 flex items-center sm:hidden">
+                    <button type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500" aria-controls="mobile-menu" aria-expanded="false">
+                        <span class="sr-only">Open main menu</span>
+                        <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="bg-gradient-to-r from-blue-500 to-purple-600 py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h1 class="text-4xl font-extrabold text-white sm:text-5xl sm:tracking-tight lg:text-6xl">
+                    Share Your Thoughts With The World
+                </h1>
+                <p class="mt-5 max-w-xl mx-auto text-xl text-blue-100">
+                    Join our community of writers and readers. Create, connect, and grow.
+                </p>
+                <div class="mt-8">
+                    <button class="bg-white text-blue-600 px-6 py-3 rounded-md text-lg font-medium hover:bg-blue-50 transition-colors duration-300">
+                        Get Started
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="lg:grid lg:grid-cols-12 lg:gap-8">
+            <!-- Sidebar -->
+            <aside class="hidden lg:block lg:col-span-3">
+                <div class="sticky top-6 space-y-4">
+                    <div class="bg-white rounded-lg shadow p-6">
+                        <h3 class="text-lg font-medium text-gray-900 mb-4">Categories</h3>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="text-blue-600 hover:text-blue-800 flex items-center">
+                                <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zm0 14a6 6 0 110-12 6 6 0 010 12z"/></svg>
+                                Technology
+                            </a></li>
+                            <li><a href="#" class="text-gray-600 hover:text-gray-800 flex items-center">
+                                <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zm0 14a6 6 0 110-12 6 6 0 010 12z"/></svg>
+                                Lifestyle
+                            </a></li>
+                            <li><a href="#" class="text-gray-600 hover:text-gray-800 flex items-center">
+                                <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zm0 14a6 6 0 110-12 6 6 0 010 12z"/></svg>
+                                Business
+                            </a></li>
+                            <li><a href="#" class="text-gray-600 hover:text-gray-800 flex items-center">
+                                <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zm0 14a6 6 0 110-12 6 6 0 010 12z"/></svg>
+                                Travel
+                            </a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="bg-white rounded-lg shadow p-6">
+                        <h3 class="text-lg font-medium text-gray-900 mb-4">Popular Tags</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <a href="#" class="inline-block bg-gray-100 hover:bg-gray-200 rounded-full px-3 py-1 text-sm font-medium text-gray-700">#javascript</a>
+                            <a href="#" class="inline-block bg-gray-100 hover:bg-gray-200 rounded-full px-3 py-1 text-sm font-medium text-gray-700">#webdev</a>
+                            <a href="#" class="inline-block bg-gray-100 hover:bg-gray-200 rounded-full px-3 py-1 text-sm font-medium text-gray-700">#react</a>
+                            <a href="#" class="inline-block bg-gray-100 hover:bg-gray-200 rounded-full px-3 py-1 text-sm font-medium text-gray-700">#design</a>
+                            <a href="#" class="inline-block bg-gray-100 hover:bg-gray-200 rounded-full px-3 py-1 text-sm font-medium text-gray-700">#startup</a>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-lg shadow p-6">
+                        <h3 class="text-lg font-medium text-gray-900 mb-4">Weekly Newsletter</h3>
+                        <p class="text-gray-600 mb-3">Get the latest posts delivered right to your inbox</p>
+                        <form>
+                            <input type="email" placeholder="Your email address" class="w-full px-4 py-2 border border-gray-300 rounded-md placeholder-text focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <button type="submit" class="mt-2 w-full bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors duration-300">
+                                Subscribe
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </aside>
+            
+            <!-- Blog Posts -->
+            <main class="lg:col-span-9 space-y-6">
+                <!-- Featured Post -->
+                <div class="bg-white rounded-lg shadow overflow-hidden blog-card">
+                    <img class="w-full h-64 object-cover" src="https://placehold.co/800x400" alt="Featured blog post showing a laptop on a desk with books and coffee in a cozy workspace">
+                    <div class="p-6">
+                        <div class="flex items-center text-sm text-gray-500 mb-2">
+                            <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs font-medium">Featured</span>
+                            <span class="mx-2">•</span>
+                            <span>May 15, 2023</span>
+                            <span class="mx-2">•</span>
+                            <span>5 min read</span>
+                        </div>
+                        <h2 class="text-2xl font-bold text-gray-900 mb-3">The Future of Web Development in 2023</h2>
+                        <p class="text-gray-600 mb-4">Exploring the latest trends and technologies that are shaping the future of web development. From AI-powered tools to new JavaScript frameworks, find out what's coming next.</p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <img class="w-8 h-8 rounded-full mr-2" src="https://placehold.co/100x100" alt="Author profile picture showing a young woman with curly hair smiling at the camera">
+                                <div>
+                                    <p class="text-sm font-medium text-gray-900">Sarah Johnson</p>
+                                    <p class="text-xs text-gray-500">Senior Developer</p>
+                                </div>
+                            </div>
+                            <a href="#" class="text-blue-600 hover:text-blue-800 font-medium">
+                                Read more →
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Regular Posts -->
+                <div class="grid md:grid-cols-2 gap-6">
+                    <!-- Post 1 -->
+                    <div class="bg-white rounded-lg shadow overflow-hidden blog-card">
+                        <img class="w-full h-48 object-cover" src="https://placehold.co/600x400" alt="Digital artwork showing abstract web development concepts with colorful code elements floating in space">
+                        <div class="p-6">
+                            <div class="flex items-center text-sm text-gray-500 mb-2">
+                                <span>May 10, 2023</span>
+                                <span class="mx-2">•</span>
+                                <span>8 min read</span>
+                            </div>
+                            <h2 class="text-xl font-bold text-gray-900 mb-3">Mastering Vue.js: A Comprehensive Guide</h2>
+                            <p class="text-gray-600 mb-4">Learn the ins and outs of Vue.js with our detailed guide covering components, state management, and performance optimization.</p>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <img class="w-8 h-8 rounded-full mr-2" src="https://placehold.co/100x100" alt="Author profile picture showing a man with glasses and short beard working at a computer">
+                                    <p class="text-sm font-medium text-gray-900">Michael Chen</p>
+                                </div>
+                                <a href="#" class="text-blue-600 hover:text-blue-800 text-sm font-medium">
+                                    Read more
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Post 2 -->
+                    <div class="bg-white rounded-lg shadow overflow-hidden blog-card">
+                        <img class="w-full h-48 object-cover" src="https://placehold.co/600x400" alt="Dark mode interface design with code editor showing syntax highlighting">
+                        <div class="p-6">
+                            <div class="flex items-center text-sm text-gray-500 mb-2">
+                                <span>May 5, 2023</span>
+                                <span class="mx-2">•</span>
+                                <span>6 min read</span>
+                            </div>
+                            <h2 class="text-xl font-bold text-gray-900 mb-3">Designing Accessible Web Applications</h2>
+                            <p class="text-gray-600 mb-4">Accessibility is more important than ever. Discover the best practices for creating web applications that everyone can use.</p>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <img class="w-8 h-8 rounded-full mr-2" src="https://placehold.co/100x100" alt="Author profile picture showing a person with short hair smiling in a professional headshot">
+                                    <p class="text-sm font-medium text-gray-900">Alex Morgan</p>
+                                </div>
+                                <a href="#" class="text-blue-600 hover:text-blue-800 text-sm font-medium">
+                                    Read more
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Post 3 -->
+                    <div class="bg-white rounded-lg shadow overflow-hidden blog-card">
+                        <img class="w-full h-48 object-cover" src="https://placehold.co/600x400" alt="Modern UI components showcased in a design system with consistent colors and typography">
+                        <div class="p-6">
+                            <div class="flex items-center text-sm text-gray-500 mb-2">
+                                <span>April 28, 2023</span>
+                                <span class="mx-2">•</span>
+                                <span>4 min read</span>
+                            </div>
+                            <h2 class="text-xl font-bold text-gray-900 mb-3">The Power of Component-Based Design</h2>
+                            <p class="text-gray-600 mb-4">How adopting a component-based approach can streamline your development process and improve consistency across projects.</p>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <img class="w-8 h-8 rounded-full mr-2" src="https://placehold.co/100x100" alt="Author profile picture showing a woman with elegant makeup and jewelry in a professional setting">
+                                    <p class="text-sm font-medium text-gray-900">Jessica Williams</p>
+                                </div>
+                                <a href="#" class="text-blue-600 hover:text-blue-800 text-sm font-medium">
+                                    Read more
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Post 4 -->
+                    <div class="bg-white rounded-lg shadow overflow-hidden blog-card">
+                        <img class="w-full h-48 object-cover" src="https://placehold.co/600x400" alt="Server room rack with blinking lights and complex network cabling">
+                        <div class="p-6">
+                            <div class="flex items-center text-sm text-gray-500 mb-2">
+                                <span>April 22, 2023</span>
+                                <span class="mx-2">•</span>
+                                <span>7 min read</span>
+                            </div>
+                            <h2 class="text-xl font-bold text-gray-900 mb-3">Backend Performance Optimization Techniques</h2>
+                            <p class="text-gray-600 mb-4">Learn how to identify and fix common backend performance bottlenecks with these proven techniques and tools.</p>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <img class="w-8 h-8 rounded-full mr-2" src="https://placehold.co/100x100" alt="Author profile picture showing a man in a blue shirt smiling confidently">
+                                    <p class="text-sm font-medium text-gray-900">David Kim</p>
+                                </div>
+                                <a href="#" class="text-blue-600 hover:text-blue-800 text-sm font-medium">
+                                    Read more
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Pagination -->
+                <nav class="flex items-center justify-between border-t border-gray-200 px-4 py-3 mt-8">
+                    <div class="flex-1 flex justify-between sm:hidden">
+                        <a href="#" class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                            Previous
+                        </a>
+                        <a href="#" class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                            Next
+                        </a>
+                    </div>
+                    <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+                        <div>
+                            <p class="text-sm text-gray-700">
+                                Showing <span class="font-medium">1</span> to <span class="font-medium">4</span> of <span class="font-medium">12</span> results
+                            </p>
+                        </div>
+                        <div>
+                            <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+                                <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                                    <span class="sr-only">Previous</span>
+                                    <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                        <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+                                    </svg>
+                                </a>
+                                <a href="#" aria-current="page" class="z-10 bg-blue-50 border-blue-500 text-blue-600 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
+                                    1
+                                </a>
+                                <a href="#" class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
+                                    2
+                                </a>
+                                <a href="#" class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
+                                    3
+                                </a>
+                                <span class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700">
+                                    ...
+                                </span>
+                                <a href="#" class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
+                                    8
+                                </a>
+                                <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                                    <span class="sr-only">Next</span>
+                                    <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                        <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                                    </svg>
+                                </a>
+                            </nav>
+                        </div>
+                    </div>
+                </nav>
+            </main>
+        </div>
+    </div>
+
+    <!-- Blog Post Detail Modal (Hidden by default) -->
+    <div id="postModal" class="hidden fixed inset-0 overflow-y-auto z-50">
+        <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+                <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+            </div>
+            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+            <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-4xl sm:w-full">
+                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                    <div class="sm:flex sm:items-start">
+                        <div class="w-full">
+                            <button id="closeModal" class="float-right text-gray-400 hover:text-gray-500">
+                                <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            </button>
+                            
+                            <!-- Post Content -->
+                            <div class="mt-6">
+                                <h1 class="text-3xl font-bold text-gray-900 mb-4">The Future of Web Development in 2023</h1>
+                                <div class="flex items-center text-sm text-gray-500 mb-6">
+                                    <img class="w-8 h-8 rounded-full mr-2" src="https://placehold.co/100x100" alt="Author Sarah Johnson's profile picture showing a young woman with curly hair smiling at the camera">
+                                    <span>Sarah Johnson</span>
+                                    <span class="mx-2">•</span>
+                                    <span>May 15, 2023</span>
+                                    <span class="mx-2">•</span>
+                                    <span>5 min read</span>
+                                </div>
+                                
+                                <img class="w-full h-96 object-cover rounded-lg mb-8" src="https://placehold.co/1200x600" alt="Featured image showing futuristic web development concepts with floating UI elements and glowing data connections">
+                                
+                                <div class="prose max-w-none text-gray-700 mb-8">
+                                    <p class="mb-4">The web development landscape is evolving at an unprecedented pace, with new technologies emerging that promise to revolutionize how we build web applications. In this article, we'll explore some of the most exciting developments on the horizon.</p>
+                                    
+                                    <h2 class="text-xl font-bold mt-8 mb-4 text-gray-900">AI-Assisted Development</h2>
+                                    <p class="mb-4">Artificial Intelligence is no longer just for automation - it's becoming an active participant in the development process. Tools like GitHub Copilot are just the beginning. Soon we'll see AI that can:</p>
+                                    <ul class="list-disc pl-6 mb-4">
+                                        <li>Generate entire components based on natural language descriptions</li>
+                                        <li>Automatically optimize performance based on usage patterns</li>
+                                        <li>Suggest architectural improvements based on project analysis</li>
+                                    </ul>
+                                    
+                                    <h2 class="text-xl font-bold mt-8 mb-4 text-gray-900">WebAssembly Maturity</h2>
+                                    <p class="mb-4">WebAssembly (Wasm) is moving beyond its initial use cases to become a fundamental building block of web applications. The next phase includes:</p>
+                                    <ul class="list-disc pl-6 mb-4">
+                                        <li>Enhanced debugging capabilities</li>
+                                        <li>Improved garbage collection</li>
+                                        <li>Threading support for true parallel processing</li>
+                                    </ul>
+                                    
+                                    <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6">
+                                        <p class="font-medium text-blue-800">Note: These changes will require developers to rethink traditional approaches to web application architecture.</p>
+                                    </div>
+                                </div>
+                                
+                                <!-- Comments Section -->
+                                <div class="border-t border-gray-200 pt-8">
+                                    <h3 class="text-xl font-semibold text-gray-900 mb-6">Comments (4)</h3>
+                                    
+                                    <!-- Comment Form -->
+                                    <div class="mb-8">
+                                        <textarea class="w-full px-4 py-2 border border-gray-300 rounded-md placeholder-text focus:outline-none focus:ring-2 focus:ring-blue-500" rows="3" placeholder="Add your comment..."></textarea>
+                                        <div class="mt-2 flex justify-end">
+                                            <button class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors duration-300">
+                                                Post Comment
+                                            </button>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Existing Comments -->
+                                    <div class="space-y-4">
+                                        <!-- Comment 1 -->
+                                        <div class="comment-box pl-4 py-3">
+                                            <div class="flex items-start">
+                                                <img class="w-8 h-8 rounded-full mr-3" src="https://placehold.co/100x100" alt="Commenter profile picture showing a man with glasses and a beard smiling">
+                                                <div>
+                                                    <p class="font-medium text-gray-900">Thomas Lee</p>
+                                                    <p class="text-sm text-gray-500 mb-2">May 15, 2023</p>
+                                                    <p class="text-gray-700">Great overview! Have you tried the new WASM GC features in Chrome Canary? The performance improvements are remarkable.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Comment 2 -->
+                                        <div class="comment-box pl-4 py-3">
+                                            <div class="flex items-start">
+                                                <img class="w-8 h-8 rounded-full mr-3" src="https://placehold.co/100x100" alt="Commenter profile picture showing a woman with short blonde hair and glasses">
+                                                <div>
+                                                    <p class="font-medium text-gray-900">Alex Rivera</p>
+                                                    <p class="text-sm text-gray-500 mb-2">May 16, 2023</p>
+                                                    <p class="text-gray-700">Excellent article! I'd love to see a follow-up diving deeper into how AI might change team dynamics in web development organizations.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                    <button type="button" id="savePost" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm">
+                        Save Changes
+                    </button>
+                    <button type="button" id="cancelPost" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Auth Modal (Hidden by default) -->
+    <div id="authModal" class="hidden fixed inset-0 overflow-y-auto z-50">
+        <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+                <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+            </div>
+            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+            <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-md sm:w-full">
+                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                    <div class="sm:flex sm:items-start">
+                        <div class="w-full">
+                            <button id="closeAuthModal" class="float-right text-gray-400 hover:text-gray-500">
+                                <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            </button>
+                            
+                            <!-- Auth Tabs -->
+                            <div class="border-b border-gray-200">
+                                <nav class="-mb-px flex">
+                                    <a href="#" id="loginTab" class="w-1/2 py-4 px-1 text-center border-b-2 border-blue-500 font-medium text-sm text-blue-600">Sign In</a>
+                                    <a href="#" id="registerTab" class="w-1/2 py-4 px-1 text-center border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700">Sign Up</a>
+                                </nav>
+                            </div>
+                            
+                            <!-- Login Form -->
+                            <div id="loginForm" class="mt-6">
+                                <div class="auth-form bg-white p-6 rounded-md">
+                                    <h3 class="text-xl font-semibold text-gray-900 mb-6">Welcome back</h3>
+                                    
+                                    <form>
+                                        <div class="mb-4">
+                                            <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                                            <input type="email" id="email" class="w-full px-4 py-2 border border-gray-300 rounded-md placeholder-text focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                        </div>
+                                        
+                                        <div class="mb-4">
+                                            <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                                            <input type="password" id="password" class="w-full px-4 py-2 border border-gray-300 rounded-md placeholder-text focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                        </div>
+                                        
+                                        <div class="flex items-center justify-between mb-6">
+                                            <div class="flex items-center">
+                                                <input id="remember-me" name="remember-me" type="checkbox" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
+                                                <label for="remember-me" class="ml-2 block text-sm text-gray-700">
+                                                    Remember me
+                                                </label>
+                                            </div>
+                                            
+                                            <div class="text-sm">
+                                                <a href="#" class="font-medium text-blue-600 hover:text-blue-500">
+                                                    Forgot your password?
+                                                </a>
+                                            </div>
+                                        </div>
+                                        
+                                        <button type="submit" class="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md text-sm font-medium transition-colors duration-300">
+                                            Sign In
+                                        </button>
+                                    </form>
+                                    
+                                    <div class="mt-6">
+                                        <div class="relative">
+                                            <div class="absolute inset-0 flex items-center">
+                                                <div class="w-full border-t border-gray-300"></div>
+                                            </div>
+                                            <div class="relative flex justify-center text-sm">
+                                                <span class="px-2 bg-white text-gray-500">
+                                                    Or continue with
+                                                </span>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="mt-6 grid grid-cols-2 gap-3">
+                                            <div>
+                                                <button type="button" class="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+                                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                                                        <path fill-rule="evenodd" d="M10 0C4.477 0 0 4.477 0 10c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.564 9.564 0 0110 4.844c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.933.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C17.14 18.163 20 14.418 20 10c0-5.523-4.477-10-10-10z" clip-rule="evenodd" />
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                            
+                                            <div>
+                                                <button type="button" class="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+                                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                                                        <path d="M6.29 18.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0020 3.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.073 4.073 0 01.8 7.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 010 16.407a11.616 11.616 0 006.29 1.84" />
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Register Form (hidden by default) -->
+                            <div id="registerForm" class="hidden mt-6">
+                                <div class="auth-form bg-white p-6 rounded-md">
+                                    <h3 class="text-xl font-semibold text-gray-900 mb-6">Create your account</h3>
+                                    
+                                    <form>
+                                        <div class="mb-4">
+                                            <label for="reg-name" class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                                            <input type="text" id="reg-name" class="w-full px-4 py-2 border border-gray-300 rounded-md placeholder-text focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                        </div>
+                                        
+                                        <div class="mb-4">
+                                            <label for="reg-email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                                            <input type="email" id="reg-email" class="w-full px-4 py-2 border border-gray-300 rounded-md placeholder-text focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                        </div>
+                                        
+                                        <div class="mb-4">
+                                            <label for="reg-password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                                            <input type="password" id="reg-password" class="w-full px-4 py-2 border border-gray-300 rounded-md placeholder-text focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                        </div>
+                                        
+                                        <div class="mb-6">
+                                            <label for="reg-confirm-password" class="block text-sm font-medium text-gray-700 mb-1">Confirm Password</label>
+                                            <input type="password" id="reg-confirm-password" class="w-full px-4 py-2 border border-gray-300 rounded-md placeholder-text focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                        </div>
+                                        
+                                        <div class="flex items-start mb-6">
+                                            <div class="flex items-center h-5">
+                                                <input id="terms" name="terms" type="checkbox" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
+                                            </div>
+                                            <div class="ml-3 text-sm">
+                                                <label for="terms" class="font-medium text-gray-700">
+                                                    I agree to the <a href="#" class="text-blue-600 hover:text-blue-500">Terms and Conditions</a>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        
+                                        <button type="submit" class="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md text-sm font-medium transition-colors duration-300">
+                                            Create Account
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800">
+        <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+            <div class="xl:grid xl:grid-cols-3 xl:gap-8">
+                <div class="space-y-8 xl:col-span-1">
+                    <span class="text-xl font-bold text-white">BlogSphere</span>
+                    <p class="text-gray-300 text-base">
+                        A platform for creators and thinkers to share their ideas with the world.
+                    </p>
+                    <div class="flex space-x-6">
+                        <a href="#" class="text-gray-400 hover:text-gray-300">
+                            <span class="sr-only">Twitter</span>
+                            <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012 8.13v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"></path>
+                            </svg>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-gray-300">
+                            <span class="sr-only">GitHub</span>
+                            <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.027 2.91.832.092-.641.35-1.085.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.295 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"></path>
+                            </svg>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-gray-300">
+                            <span class="sr-only">LinkedIn</span>
+                            <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="mt-12 grid grid-cols-2 gap-8 xl:mt-0 xl:col-span-2">
+                    <div class="md:grid md:grid-cols-2 md:gap-8">
+                        <div>
+                            <h3 class="text-sm font-semibold text-gray-300 tracking-wider uppercase">BlogSphere</h3>
+                            <ul class="mt-4 space-y-4">
+                                <li>
+                                    <a href="#" class="text-base text-gray-400 hover:text-white">About</a>
+                                </li>
+                                <li>
+                                    <a href="#" class="text-base text-gray-400 hover:text-white">Features</a>
+                                </li>
+                                <li>
+                                    <a href="#" class="text-base text-gray-400 hover:text-white">Pricing</a>
+                                </li>
+                                <li>
+                                    <a href="#" class="text-base text-gray-400 hover:text-white">Team</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="mt-12 md:mt-0">
+                            <h3 class="text-sm font-semibold text-gray-300 tracking-wider uppercase">Resources</h3>
+                            <ul class="mt-4 space-y-4">
+                                <li>
+                                    <a href="#" class="text-base text-gray-400 hover:text-white">Documentation</a>
+                                </li>
+                                <li>
+                                    <a href="#" class="text-base text-gray-400 hover:text-white">Guides</a>
+                                </li>
+                                <li>
+                                    <a href="#" class="text-base text-gray-400 hover:text-white">Blog</a>
+                                </li>
+                                <li>
+                                    <a href="#" class="text-base text-gray-400 hover:text-white">Community</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="md:grid md:grid-cols-2 md:gap-8">
+                        <div>
+                            <h3 class="text-sm font-semibold text-gray-300 tracking-wider uppercase">Legal</h3>
+                            <ul class="mt-4 space-y-4">
+                                <li>
+                                    <a href="#" class="text-base text-gray-400 hover:text-white">Privacy</a>
+                                </li>
+                                <li>
+                                    <a href="#" class="text-base text-gray-400 hover:text-white">Terms</a>
+                                </li>
+                                <li>
+                                    <a href="#" class="text-base text-gray-400 hover:text-white">Cookie Policy</a>
+                                </li>
+                                <li>
+                                    <a href="#" class="text-base text-gray-400 hover:text-white">GDPR</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="mt-12 md:mt-0">
+                            <h3 class="text-sm font-semibold text-gray-300 tracking-wider uppercase">Support</h3>
+                            <ul class="mt-4 space-y-4">
+                                <li>
+                                    <a href="#" class="text-base text-gray-400 hover:text-white">Help Center</a>
+                                </li>
+                                <li>
+                                    <a href="#" class="text-base text-gray-400 hover:text-white">Contact</a>
+                                </li>
+                                <li>
+                                    <a href="#" class="text-base text-gray-400 hover:text-white">Status</a>
+                                </li>
+                                <li>
+                                    <a href="#" class="text-base text-gray-400 hover:text-white">FAQ</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-12 border-t border-gray-700 pt-8">
+                <p class="text-base text-gray-400 text-center">
+                    &copy; 2023 BlogSphere. All rights reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Handle auth modal tabs
+        document.getElementById('loginTab').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('registerForm').classList.add('hidden');
+            document.getElementById('loginForm').classList.remove('hidden');
+            document.getElementById('loginTab').classList.remove('border-transparent', 'text-gray-500', 'hover:text-gray-700');
+            document.getElementById('loginTab').classList.add('border-blue-500', 'text-blue-600');
+            document.getElementById('registerTab').classList.remove('border-blue-500', 'text-blue-600');
+            document.getElementById('registerTab').classList.add('border-transparent', 'text-gray-500', 'hover:text-gray-700');
+        });
+        
+        document.getElementById('registerTab').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('loginForm').classList.add('hidden');
+            document.getElementById('registerForm').classList.remove('hidden');
+            document.getElementById('registerTab').classList.remove('border-transparent', 'text-gray-500', 'hover:text-gray-700');
+            document.getElementById('registerTab').classList.add('border-blue-500', 'text-blue-600');
+            document.getElementById('loginTab').classList.remove('border-blue-500', 'text-blue-600');
+            document.getElementById('loginTab').classList.add('border-transparent', 'text-gray-500', 'hover:text-gray-700');
+        });
+        
+        // Handle modal close buttons
+        document.getElementById('closeModal').addEventListener('click', function() {
+            document.getElementById('postModal').classList.add('hidden');
+        });
+        
+        document.getElementById('closeAuthModal').addEventListener('click', function() {
+            document.getElementById('authModal').classList.add('hidden');
+        });
+        
+        // Simulate clicking on a blog post to show the modal (for demo purposes)
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add click handlers to blog post "Read more" links
+            const readMoreLinks = document.querySelectorAll('a[href="#"]'); 
+            readMoreLinks.forEach(link => {
+                if (link.textContent.includes('Read more')) {
+                    link.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        document.getElementById('postModal').classList.remove('hidden');
+                    });
+                }
+            });
+            
+            // If there's a "Get Started" button, show auth modal
+            const getStartedBtns = document.querySelectorAll('button');
+            getStartedBtns.forEach(btn => {
+                if (btn.textContent.includes('Get Started')) {
+                    btn.addEventListener('click', function() {
+                        document.getElementById('authModal').classList.remove('hidden');
+                    });
+                }
+            });
+            
+            // Handle cancel/save buttons in post modal
+            document.getElementById('cancelPost').addEventListener('click', function() {
+                document.getElementById('postModal').classList.add('hidden');
+            });
+            
+            document.getElementById('savePost').addEventListener('click', function() {
+                // In a real app, this would save changes
+                alert('Changes saved!');
+                document.getElementById('postModal').classList.add('hidden');
+            });
+        });
+    </script>
+</body>
+</html>
 
